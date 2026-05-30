@@ -1,5 +1,5 @@
 === Dhivehi Writer ===
-Contributors: SAM Digital
+Contributors: islandboymv
 Tags: dhivehi, thaana, rtl, maldives, multilingual
 Requires at least: 5.8
 Requires PHP: 7.2

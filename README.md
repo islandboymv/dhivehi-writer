@@ -56,6 +56,10 @@ It flips the primary font to Noto Sans Thaana, drops the Faruma font, and remove
 - **Noto Sans Thaana** — © The Noto Project, [SIL Open Font License 1.1](assets/fonts/OFL.txt).
 - **Faruma** — the classic Maldivian Thaana font, bundled as a web font (GitHub build only).
 
+## Author
+
+Made by **Mifzaal Abdul Bari** ([islandboymv](https://github.com/islandboymv)) — [islandboy.xyz](https://islandboy.xyz).
+
 ## License
 
 GPL‑2.0+

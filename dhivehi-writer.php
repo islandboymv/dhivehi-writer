@@ -4,7 +4,8 @@
  * Plugin URI:  https://github.com/islandboymv/dhivehi-writer
  * Description: Adds full Dhivehi (Thaana) writing support to the WordPress post editor — RTL paragraphs, inline text, bullets, font sizing, bold, italic, and more. Ships a bundled Thaana web font so Dhivehi renders on every visitor's device.
  * Version:     2.1.0
- * Author:      SAM Digital
+ * Author:      Mifzaal Abdul Bari
+ * Author URI:  https://islandboy.xyz
  * License:     GPL-2.0+
  * Requires at least: 5.8
  * Requires PHP: 7.2
