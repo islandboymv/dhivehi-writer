@@ -4,7 +4,7 @@ Tags: dhivehi, thaana, rtl, maldives, multilingual
 Requires at least: 5.8
 Requires PHP: 7.2
 Tested up to: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,9 @@ The chosen font is tried first, then it falls back to the bundled Faruma and Not
 Bundles the **Noto Sans Thaana** font by Google, licensed under the SIL Open Font License 1.1 (see assets/fonts/OFL.txt), and the **Faruma** Thaana font.
 
 == Changelog ==
+
+= 2.2.1 =
+* Fixed the block "+" appender/inserter overlapping the right-aligned placeholder text inside the Dhivehi Section in the editor (RTL editor-chrome alignment)
 
 = 2.2.0 =
 * Upgraded the Dhivehi Section block to Block API v3, so it uses WordPress 7.0's iframed editor canvas instead of forcing the editor into the legacy non-iframed mode
