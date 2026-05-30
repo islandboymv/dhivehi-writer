@@ -17,6 +17,12 @@ define( 'DHW_VERSION', '2.1.0' );
 define( 'DHW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DHW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
+// Primary Dhivehi font and the bundled fallback chain. The WordPress.org
+// build (bin/build-wporg.sh) flips these to Noto Sans Thaana, since it
+// cannot bundle the Faruma font.
+define( 'DHW_DEFAULT_FONT', 'Faruma' );
+define( 'DHW_FONT_FALLBACK', "'Faruma', 'Noto Sans Thaana', 'MV Boli', serif" );
+
 class Dhivehi_Writer {
 
     public function __construct() {
@@ -99,7 +105,7 @@ class Dhivehi_Writer {
 
     private function js_settings() {
         return [
-            'font'        => get_option( 'dhw_font', 'Faruma' ),
+            'font'        => get_option( 'dhw_font', DHW_DEFAULT_FONT ),
             'fontStack'   => $this->font_stack(),
             'fontSize'    => get_option( 'dhw_font_size', '1.1' ),
             'lineHeight'  => get_option( 'dhw_line_height', '2.2' ),
@@ -109,14 +115,14 @@ class Dhivehi_Writer {
 
     /**
      * Build the Dhivehi font stack. The chosen font is tried first, then the
-     * bundled web fonts as a safety net — Faruma (primary, the classic Thaana
-     * look) and Noto Sans Thaana (universal fallback). Both are bundled as
-     * @font-face web fonts, so Dhivehi renders on every device.
+     * bundled web font(s) as a safety net, so Dhivehi renders on every device.
+     * The primary/default font is set by DHW_DEFAULT_FONT.
      */
     private function font_stack() {
-        $font     = get_option( 'dhw_font', 'Faruma' );
-        $fallback = "'Faruma', 'Noto Sans Thaana', 'MV Boli', serif";
-        return ( $font === 'Faruma' ) ? $fallback : "'{$font}', {$fallback}";
+        $font = get_option( 'dhw_font', DHW_DEFAULT_FONT );
+        return ( $font === DHW_DEFAULT_FONT )
+            ? DHW_FONT_FALLBACK
+            : "'{$font}', " . DHW_FONT_FALLBACK;
     }
 
     /* ─── TinyMCE (Classic Editor) ────────────────────────────── */
@@ -270,7 +276,7 @@ class Dhivehi_Writer {
     }
 
     public function render_settings_page() {
-        $font        = get_option( 'dhw_font', 'Faruma' );
+        $font        = get_option( 'dhw_font', DHW_DEFAULT_FONT );
         $font_size   = get_option( 'dhw_font_size', '1.1' );
         $line_height = get_option( 'dhw_line_height', '2.2' );
         ?>
@@ -286,13 +292,14 @@ class Dhivehi_Writer {
                             <select name="dhw_font" id="dhw_font">
                                 <?php
                                 $fonts = [
-                                    'Faruma'           => 'Faruma (bundled web font — classic Thaana look) ✓ recommended',
+                                    'Faruma'           => 'Faruma (bundled web font — classic Thaana look)',
                                     'Noto Sans Thaana' => 'Noto Sans Thaana (bundled web font — modern & clean)',
                                     'MV Boli'          => 'MV Boli (only renders if installed on the visitor\'s device)',
                                     'A_Faru'           => 'A_Faru (only if installed on the visitor\'s device)',
                                     'MV Iyyu'          => 'MV Iyyu (only if installed on the visitor\'s device)',
                                 ];
                                 foreach ( $fonts as $value => $label ) {
+                                    if ( $value === DHW_DEFAULT_FONT ) $label .= ' ✓ recommended';
                                     printf(
                                         '<option value="%s" %s>%s</option>',
                                         esc_attr( $value ),
@@ -303,11 +310,10 @@ class Dhivehi_Writer {
                                 ?>
                             </select>
                             <p class="description">
-                                <strong>Faruma</strong> and <strong>Noto Sans Thaana</strong> are
-                                bundled web fonts, loaded for every visitor automatically — so Dhivehi
-                                renders even on devices that have no Thaana font installed. Whatever you
-                                pick here is tried first, then it falls back to the bundled fonts, so
-                                Dhivehi never breaks.
+                                The recommended font is bundled as a web font and loaded for every
+                                visitor automatically — so Dhivehi renders even on devices that have no
+                                Thaana font installed. Whatever you pick here is tried first, then it
+                                falls back to the bundled font, so Dhivehi never breaks.
                             </p>
                         </td>
                     </tr>
@@ -364,6 +370,7 @@ class Dhivehi_Writer {
 
 new Dhivehi_Writer();
 
+/* DHW_WPORG_STRIP_START — removed in the WordPress.org build (WP.org provides updates) */
 /* ─── GitHub auto-updates ─────────────────────────────────────────
  * Checks this plugin's GitHub Releases and lets WordPress update it
  * in-place (Plugins screen / auto-updates). Publish a new release with
@@ -383,3 +390,4 @@ if ( file_exists( $dhw_puc_loader ) ) {
     // Use published GitHub Releases (stable), not raw commits.
     $dhw_update_checker->getVcsApi()->enableReleaseAssets();
 }
+/* DHW_WPORG_STRIP_END */

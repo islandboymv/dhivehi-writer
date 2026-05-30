@@ -3,6 +3,7 @@
 /* Bundled Thaana web fonts — guarantee Dhivehi renders on every device,
    not just machines that happen to have a Thaana font installed. */
 
+/* DHW_WPORG_STRIP_START */
 /* Faruma — the classic Maldivian Thaana font (primary). */
 @font-face {
     font-family: 'Faruma';
@@ -11,6 +12,7 @@
     font-display: swap;
     src: url('fonts/faruma.woff') format('woff');
 }
+/* DHW_WPORG_STRIP_END */
 
 /* Noto Sans Thaana — universal fallback.
    Thaana subset (Thaana block + Arabic digits & punctuation). */

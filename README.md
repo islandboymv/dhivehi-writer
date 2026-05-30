@@ -34,10 +34,27 @@ The plugin checks this repository's **GitHub Releases** and offers updates from 
    ```
 3. The release workflow builds `dhivehi-writer.zip` and publishes a GitHub Release. Installed sites pick up the update automatically.
 
+## Builds
+
+| Build | Primary font | Auto-updates | Notes |
+|-------|--------------|--------------|-------|
+| **GitHub** (this repo / releases) | Faruma | GitHub Releases | `dhivehi-writer.zip` |
+| **WordPress.org** | Noto Sans Thaana | WordPress.org | `dhivehi-writer-wporg.zip` — no Faruma, no GitHub updater |
+
+The WordPress.org variant is generated from this same source:
+
+```bash
+bash bin/build-wporg.sh      # → build/dhivehi-writer-wporg.zip
+```
+
+It flips the primary font to Noto Sans Thaana, drops the Faruma font, and removes the GitHub update checker (WordPress.org provides its own updates). The release workflow attaches both zips to every tagged release.
+
+> **WordPress.org submission is not yet done** — it requires manual review and clears the Faruma licensing concern by not bundling Faruma.
+
 ## Fonts & licensing
 
 - **Noto Sans Thaana** — © The Noto Project, [SIL Open Font License 1.1](assets/fonts/OFL.txt).
-- **Faruma** — the classic Maldivian Thaana font, bundled as a web font.
+- **Faruma** — the classic Maldivian Thaana font, bundled as a web font (GitHub build only).
 
 ## License
 

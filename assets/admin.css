@@ -1,6 +1,7 @@
 /* ── Dhivehi Writer — Admin / Settings Page Styles ─────────────── */
 
 /* Bundled Thaana fonts, so the live preview on the settings page renders. */
+/* DHW_WPORG_STRIP_START */
 @font-face {
     font-family: 'Faruma';
     font-style: normal;
@@ -8,6 +9,7 @@
     font-display: swap;
     src: url('fonts/faruma.woff') format('woff');
 }
+/* DHW_WPORG_STRIP_END */
 @font-face {
     font-family: 'Noto Sans Thaana';
     font-style: normal;

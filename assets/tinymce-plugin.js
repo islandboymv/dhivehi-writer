@@ -94,11 +94,15 @@
             // Load the bundled Thaana web fonts inside the editor iframe so the
             // Dhivehi font is visible while writing (not only on the frontend).
             if (pluginUrl) {
+                /* DHW_WPORG_STRIP_START */
                 editor.dom.addStyle(
                     '@font-face{font-family:\'Faruma\';font-style:normal;'
                     + 'font-weight:400;font-display:swap;'
                     + 'src:url(\'' + pluginUrl + 'assets/fonts/faruma.woff\') format(\'woff\');}'
-                    + '@font-face{font-family:\'Noto Sans Thaana\';font-style:normal;'
+                );
+                /* DHW_WPORG_STRIP_END */
+                editor.dom.addStyle(
+                    '@font-face{font-family:\'Noto Sans Thaana\';font-style:normal;'
                     + 'font-weight:400 700;font-display:swap;'
                     + 'src:url(\'' + pluginUrl + 'assets/fonts/noto-sans-thaana.woff2\') format(\'woff2\');}'
                 );

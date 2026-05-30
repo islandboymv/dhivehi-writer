@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build plugin zip
+      - name: Build plugin zip (GitHub build — Faruma primary)
         run: |
           mkdir -p build/dhivehi-writer
           rsync -a \
@@ -30,8 +30,13 @@ jobs:
             ./ build/dhivehi-writer/
           cd build && zip -r ../dhivehi-writer.zip dhivehi-writer
 
+      - name: Build WordPress.org zip (Noto primary, no Faruma/updater)
+        run: bash bin/build-wporg.sh
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          files: dhivehi-writer.zip
+          files: |
+            dhivehi-writer.zip
+            build/dhivehi-writer-wporg.zip
           generate_release_notes: true
