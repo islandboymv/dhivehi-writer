@@ -74,6 +74,47 @@
     padding-left: 0;
 }
 
+/* ── Block appenders / inserters inside the RTL section ──────────
+   Gutenberg's appenders and the empty-block "+" inserter are editor
+   chrome (English "+ / Type to choose a block"), not Dhivehi content.
+   The section forces direction:rtl on inner blocks and
+   `p { text-align:right !important }` on the placeholder paragraph, so
+   the right-aligned placeholder slides under the "+" inserter and they
+   overlap. Normalize every appender/inserter variant back to LTR so the
+   "+" sits in its normal left position — matching the appender that
+   already renders cleanly outside the section. */
+
+/* "+" button appender (renderAppender: ButtonBlockAppender) */
+.wp-block-dhivehi-writer-dhivehi-section .block-list-appender {
+    display: block;
+    clear: both;
+    margin-top: 12px;
+}
+
+.wp-block-dhivehi-writer-dhivehi-section .block-list-appender,
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-button-block-appender,
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-default-block-appender,
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-block-list__empty-block-inserter,
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-block-list__insertion-point-inserter {
+    direction: ltr;
+}
+
+/* Default appender placeholder <p> otherwise inherits the section's
+   `p { text-align:right !important }`, colliding with the inline "+". */
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-default-block-appender__content {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+/* The empty-block "+" inserter is absolutely positioned; in RTL core
+   parks it at the right gutter, where it lands on top of the right-hugging
+   placeholder. RTL content always leaves the left side empty, so move the
+   inserter into that free left gutter instead. */
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-block-list__empty-block-inserter {
+    right: auto;
+    left: 0;
+}
+
 /* Inline Dhivehi format highlight in editor */
 .dhivehi-text {
     direction: rtl;
