@@ -6,6 +6,7 @@ Requires PHP: 7.2
 Tested up to: 6.7
 Stable tag: 2.1.0
 License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Write Dhivehi (Thaana script) inside English WordPress posts — with proper RTL layout and a bundled font that renders on every device.
 
