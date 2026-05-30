@@ -1,0 +1,96 @@
+/* ── Dhivehi Writer — Frontend Styles ─────────────────────────── */
+
+/* Bundled Thaana web fonts — guarantee Dhivehi renders on every device,
+   not just machines that happen to have a Thaana font installed. */
+
+/* Faruma — the classic Maldivian Thaana font (primary). */
+@font-face {
+    font-family: 'Faruma';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/faruma.woff') format('woff');
+}
+
+/* Noto Sans Thaana — universal fallback.
+   Thaana subset (Thaana block + Arabic digits & punctuation). */
+@font-face {
+    font-family: 'Noto Sans Thaana';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/noto-sans-thaana.woff2') format('woff2');
+    unicode-range: U+060C, U+061B-061C, U+061F, U+0660-066C, U+0780-07B1,
+                   U+200C-200F, U+25CC, U+FDF2, U+FDFD;
+}
+/* Latin subset — Latin glyphs (digits, punctuation) inside Dhivehi runs. */
+@font-face {
+    font-family: 'Noto Sans Thaana';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/noto-sans-thaana-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                   U+02DA, U+02DC, U+2000-206F, U+2122, U+2212;
+}
+
+/* Font / size / line-height come from the settings page via CSS custom
+   properties injected by wp_add_inline_style. The values below are the
+   fallbacks used if that inline style is missing for any reason. */
+
+/* Section wrapper (Gutenberg InnerBlocks output) */
+.dhivehi-section {
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: embed;
+}
+
+.dhivehi-section p,
+.dhivehi-section h1,
+.dhivehi-section h2,
+.dhivehi-section h3,
+.dhivehi-section h4,
+.dhivehi-section h5,
+.dhivehi-section h6,
+.dhivehi-section li {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--dhw-font, 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif);
+    line-height: var(--dhw-line-height, 2.2);
+    unicode-bidi: embed;
+}
+
+/* Lists: flip padding so bullets appear on the right */
+.dhivehi-section ul,
+.dhivehi-section ol,
+ul.dhivehi-list,
+ol.dhivehi-list {
+    direction: rtl;
+    text-align: right;
+    padding-right: 1.8em;
+    padding-left: 0;
+    font-family: var(--dhw-font, 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif);
+    line-height: var(--dhw-line-height, 2.2);
+}
+
+/* Classic Editor: standalone RTL paragraph / heading */
+.dhivehi-block {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--dhw-font, 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif);
+    line-height: var(--dhw-line-height, 2.2);
+    unicode-bidi: embed;
+}
+
+/* Inline Dhivehi span */
+.dhivehi-text {
+    direction: rtl;
+    font-family: var(--dhw-font, 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif);
+    unicode-bidi: embed;
+    display: inline-block;
+}
+
+/* Mixed LTR/RTL paragraphs containing an inline span */
+p:has(.dhivehi-text) {
+    unicode-bidi: plaintext;
+}

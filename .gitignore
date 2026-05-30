@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+/build/
+*.zip
+
+# Editors
+.idea/
+.vscode/
+
+# Local tooling / sessions
+.claude/
+node_modules/

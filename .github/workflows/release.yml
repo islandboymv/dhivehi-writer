@@ -1,0 +1,37 @@
+name: Build & publish release
+
+# Build an installable plugin zip and attach it to a GitHub Release
+# whenever a version tag (v*) is pushed. The Plugin Update Checker
+# bundled in the plugin reads this release to offer in-place updates.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build plugin zip
+        run: |
+          mkdir -p build/dhivehi-writer
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='build' \
+            --exclude='*.zip' \
+            ./ build/dhivehi-writer/
+          cd build && zip -r ../dhivehi-writer.zip dhivehi-writer
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dhivehi-writer.zip
+          generate_release_notes: true

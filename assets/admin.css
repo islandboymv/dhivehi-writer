@@ -1,0 +1,44 @@
+/* ── Dhivehi Writer — Admin / Settings Page Styles ─────────────── */
+
+/* Bundled Thaana fonts, so the live preview on the settings page renders. */
+@font-face {
+    font-family: 'Faruma';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/faruma.woff') format('woff');
+}
+@font-face {
+    font-family: 'Noto Sans Thaana';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/noto-sans-thaana.woff2') format('woff2');
+}
+
+.dhw-settings-wrap h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dhw-version {
+    font-size: 0.55em;
+    background: #00789e;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+.dhw-settings-wrap code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.dhw-settings-wrap h3 {
+    margin-top: 1.2em;
+}

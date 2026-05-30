@@ -1,0 +1,81 @@
+/* ── Dhivehi Writer — Block Editor Styles (editor-only) ───────── */
+
+/* Bundled Thaana web fonts, so the Dhivehi font shows inside the editor
+   canvas while writing (WP injects these styles into the editor iframe). */
+@font-face {
+    font-family: 'Faruma';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/faruma.woff') format('woff');
+}
+@font-face {
+    font-family: 'Noto Sans Thaana';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/noto-sans-thaana.woff2') format('woff2');
+}
+
+/* Section wrapper in editor */
+.wp-block-dhivehi-writer-dhivehi-section {
+    direction: rtl;
+    text-align: right;
+    border-right: 4px solid #00789e;
+    padding: 16px 16px 8px 12px;
+    background: #f0f8ff;
+    border-radius: 4px;
+    position: relative;
+}
+
+/* Editor-only label badge */
+.dhivehi-section-label {
+    font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif;
+    font-size: 0.7em;
+    color: #00789e;
+    background: #e0f2fe;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    direction: rtl;
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Inner blocks inherit RTL + Dhivehi font inside the section */
+.wp-block-dhivehi-writer-dhivehi-section .block-editor-rich-text__editable,
+.wp-block-dhivehi-writer-dhivehi-section p,
+.wp-block-dhivehi-writer-dhivehi-section h1,
+.wp-block-dhivehi-writer-dhivehi-section h2,
+.wp-block-dhivehi-writer-dhivehi-section h3,
+.wp-block-dhivehi-writer-dhivehi-section h4,
+.wp-block-dhivehi-writer-dhivehi-section li {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif !important;
+    line-height: 2.2 !important;
+    unicode-bidi: embed;
+}
+
+/* List items: flip bullet alignment */
+.wp-block-dhivehi-writer-dhivehi-section ul,
+.wp-block-dhivehi-writer-dhivehi-section ol {
+    direction: rtl;
+    text-align: right;
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+
+/* Inline Dhivehi format highlight in editor */
+.dhivehi-text {
+    direction: rtl;
+    font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', serif;
+    unicode-bidi: embed;
+    background-color: rgba(0, 120, 158, 0.08);
+    border-radius: 2px;
+    padding: 0 2px;
+}
