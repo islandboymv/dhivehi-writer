@@ -3,7 +3,7 @@
  * Plugin Name: Dhivehi Writer
  * Plugin URI:  https://github.com/islandboymv/dhivehi-writer
  * Description: Adds full Dhivehi (Thaana) writing support to the WordPress post editor — RTL paragraphs, inline text, bullets, font sizing, bold, italic, and more. Ships a bundled Thaana web font so Dhivehi renders on every visitor's device.
- * Version:     2.1.0
+ * Version:     2.2.0
  * Author:      Mifzaal Abdul Bari
  * Author URI:  https://islandboy.xyz
  * License:     GPL-2.0+
@@ -14,7 +14,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'DHW_VERSION', '2.1.0' );
+define( 'DHW_VERSION', '2.2.0' );
 define( 'DHW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DHW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -28,7 +28,18 @@ class Dhivehi_Writer {
 
     public function __construct() {
         add_action( 'admin_enqueue_scripts',    [ $this, 'enqueue_assets' ] );
-        add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_assets' ] );
+
+        // Block editor JS goes in the OUTER editor frame, where wp.blocks
+        // registration runs.
+        add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_scripts' ] );
+
+        // Block editor STYLES must go through enqueue_block_assets so WordPress
+        // injects them INTO the editor's content iframe (WP 6.3+/7.0). The
+        // Dhivehi Section block is apiVersion 3, so the canvas is iframed;
+        // styles enqueued on enqueue_block_editor_assets only reach the outer
+        // frame and would no longer style the content.
+        add_action( 'enqueue_block_assets',     [ $this, 'enqueue_block_canvas_styles' ] );
+
         add_action( 'wp_enqueue_scripts',       [ $this, 'enqueue_frontend_styles' ] );
 
         // Classic Editor (TinyMCE)
@@ -65,22 +76,32 @@ class Dhivehi_Writer {
         wp_localize_script( 'dhivehi-writer-admin', 'dhwSettings', $this->js_settings() );
     }
 
-    public function enqueue_block_assets() {
-        wp_enqueue_style(
-            'dhivehi-writer-block',
-            DHW_PLUGIN_URL . 'assets/block-editor.css',
-            [], DHW_VERSION
-        );
-
+    public function enqueue_block_editor_scripts() {
         wp_enqueue_script(
             'dhivehi-writer-block',
             DHW_PLUGIN_URL . 'assets/block-editor.js',
-            // wp-block-editor replaces deprecated wp-editor; wp-server-side-render for preview
+            // wp-block-editor replaces deprecated wp-editor; wp-rich-text for the inline format.
             [ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-rich-text', 'wp-hooks' ],
             DHW_VERSION, true
         );
 
         wp_localize_script( 'dhivehi-writer-block', 'dhwSettings', $this->js_settings() );
+    }
+
+    public function enqueue_block_canvas_styles() {
+        // enqueue_block_assets fires on BOTH the front end and the editor.
+        // On the front end the same fonts + RTL styling come from frontend.css
+        // (wp_enqueue_scripts), and block-editor.css carries editor-only chrome
+        // (the section label, canvas background) that must not leak to visitors —
+        // so restrict this to the admin/editor context, where WordPress injects
+        // it into the iframed canvas.
+        if ( ! is_admin() ) return;
+
+        wp_enqueue_style(
+            'dhivehi-writer-block',
+            DHW_PLUGIN_URL . 'assets/block-editor.css',
+            [], DHW_VERSION
+        );
     }
 
     public function enqueue_frontend_styles() {
@@ -282,7 +303,7 @@ class Dhivehi_Writer {
         $line_height = get_option( 'dhw_line_height', '2.2' );
         ?>
         <div class="wrap dhw-settings-wrap">
-            <h1>🌊 Dhivehi Writer <span class="dhw-version">v2.1</span></h1>
+            <h1>🌊 Dhivehi Writer <span class="dhw-version">v2.2</span></h1>
 
             <form method="post" action="options.php">
                 <?php settings_fields( 'dhw_settings_group' ); ?>

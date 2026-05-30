@@ -15,6 +15,10 @@
  *   - Fixed wp-editor → wp-block-editor dependency.
  *   - useBlockProps.save() used correctly in save().
  *   - Removed unused Fragment reference.
+ *
+ * v2.2: Section block upgraded to Block API v3 for the WordPress 7.0
+ *   iframed editor. Canvas styles now load via `enqueue_block_assets`
+ *   (PHP) so they reach inside the iframe.
  */
 
 (function (blocks, element, blockEditor, components, richText, i18n, hooks) {
@@ -52,10 +56,14 @@
        ═══════════════════════════════════════════════════════════ */
 
     blocks.registerBlockType('dhivehi-writer/dhivehi-section', {
-        // apiVersion 2 is required for useBlockProps / useBlockProps.save below;
-        // without it the editor double-wraps the block and the wrapper props
-        // (block id, RTL dir) are not connected correctly.
-        apiVersion:  2,
+        // apiVersion 3 opts the block into WordPress 7.0's iframed editor
+        // canvas. useBlockProps / useBlockProps.save (below) supply the
+        // wrapper props (block id, RTL dir); the saved markup is identical to
+        // apiVersion 2, so existing posts do not fail block validation.
+        // NOTE: with the iframed canvas, the block's editor styles must be
+        // enqueued via `enqueue_block_assets` (not `enqueue_block_editor_assets`)
+        // so WordPress injects them into the iframe — see dhivehi-writer.php.
+        apiVersion:  3,
         title:       'Dhivehi Section',
         description: 'A right-to-left Dhivehi (Thaana) writing area. Supports paragraphs, headings, lists and more.',
         icon:        'editor-textcolor',

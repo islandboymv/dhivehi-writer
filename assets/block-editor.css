@@ -1,7 +1,9 @@
 /* ── Dhivehi Writer — Block Editor Styles (editor-only) ───────── */
 
 /* Bundled Thaana web fonts, so the Dhivehi font shows inside the editor
-   canvas while writing (WP injects these styles into the editor iframe). */
+   canvas while writing. This stylesheet is enqueued via enqueue_block_assets
+   (see dhivehi-writer.php), so WordPress injects it into the 7.0 editor iframe;
+   the relative font URLs below resolve against this file's assets/ location. */
 /* DHW_WPORG_STRIP_START */
 @font-face {
     font-family: 'Faruma';

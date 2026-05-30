@@ -3,8 +3,8 @@ Contributors: islandboymv
 Tags: dhivehi, thaana, rtl, maldives, multilingual
 Requires at least: 5.8
 Requires PHP: 7.2
-Tested up to: 6.7
-Stable tag: 2.1.0
+Tested up to: 7.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,12 @@ The chosen font is tried first, then it falls back to the bundled Faruma and Not
 Bundles the **Noto Sans Thaana** font by Google, licensed under the SIL Open Font License 1.1 (see assets/fonts/OFL.txt), and the **Faruma** Thaana font.
 
 == Changelog ==
+
+= 2.2.0 =
+* Upgraded the Dhivehi Section block to Block API v3, so it uses WordPress 7.0's iframed editor canvas instead of forcing the editor into the legacy non-iframed mode
+* Editor canvas styles (Dhivehi font + RTL layout) now load via `enqueue_block_assets` so they render correctly inside the 7.0 editor iframe
+* Saved markup is unchanged — existing posts using the Dhivehi Section block are unaffected
+* Tested up to WordPress 7.0
 
 = 2.1.0 =
 * Bundled Faruma (default) and Noto Sans Thaana web fonts so Dhivehi renders on every device (previously relied on the visitor having a Thaana font installed)
